@@ -17,6 +17,7 @@ const Loadable = (Component) => (props) => {
 
 export default function Router() {
   return useRoutes([
+    // Login Page Routes
     {
       path: 'login',
       element: (

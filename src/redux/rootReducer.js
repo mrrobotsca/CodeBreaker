@@ -11,7 +11,7 @@ const rootPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: [],
 };
-
+// making blocs Persistant
 const blocsPersistConfig = {
   key: 'blocs',
   storage,

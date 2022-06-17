@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+
+
+// User Info inside the header
 const Avatar = styled.address`
   display: flex;
   align-items: center;

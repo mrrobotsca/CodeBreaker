@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom'
 
 import Congrats from "../assets/congrats.json";
 
-
+// Modal for the end of the game
 function Portal({ children }) {
     const modalRoot = document.getElementById('modal-root')
   

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
+// CountDown Hook , getting the Date as input . With an interval of 1sec , it convert the date to minutes and seconds
 // ----------------------------------------------------------------------
-
 export default function useCountdown(date) {
   const [intervalId, setIntervalId] = useState();
   const [startTime, setStartDate] = useState(date);
@@ -31,7 +31,7 @@ export default function useCountdown(date) {
 
   return {
     countdown,
-    stopProcess: () => {
+    stopTimer: () => {
       clearInterval(intervalId)
     },
     resteCountDown:()=>{

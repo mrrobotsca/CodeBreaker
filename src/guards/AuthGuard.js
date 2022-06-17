@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 import LoginPage from '../pages/auth/LoginPage';
 // components
 
+// Guard for making sure the Dashboard wrapping Authentification 
 // ----------------------------------------------------------------------
 
 AuthGuard.propTypes = {

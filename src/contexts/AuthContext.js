@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
 import { loginUser,getUserInfo } from "../services/api";
 
+// Authentification Context handeling getting user information on each mount/reload , making sure Token still valid in case of a JWT with a expiry  
 // ----------------------------------------------------------------------
 
 const initialState = {

@@ -8,6 +8,7 @@ function getWindowDimensions() {
   };
 }
 
+// Hook for getting the windows sizes for Conffeti
 export default function useWindowDimensions() {
     const [windowDimensions, setWindowDimensions] = useState(
       getWindowDimensions()
@@ -23,5 +24,5 @@ export default function useWindowDimensions() {
     }, []);
   
     return windowDimensions;
-  }
+}
   

@@ -27,33 +27,35 @@ function GamePage() {
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
   const [intialColors, setInitialColors] = useState([])
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
-  const [isDisplayed, setIsDisplayed] = useState(false);
+  const [confettiDisplayed, setConfettiDisplayed] = useState(false);
   // Redux States
   const { guessedBlocs } = useSelector((state) => state.blocs);
   // Hooks
-  const {countdown,stopProcess,resteCountDown} = useCountdown(new Date());
+  const {countdown,stopTimer,resteCountDown} = useCountdown(new Date());
   const [open, setOpen] = useModalToggle(false)
   const { user,logout } = useAuth();
 
   // Redux dispacher
   const dispatch = useDispatch();
-
+  // Starting a new game removes old guesses, generates a new code, and restarts the timer. 
+  // They should not be able to score a "guess" unless they have started a game and the timer is running.
+  // Reseting redux state , timer and confetti display state
   const onNewGame = () => {
     const randomColors = [...Array(5)].map((_, index) =>randomInArray(COLORS) );
     setInitialColors(randomColors)
     setCurrentGuess(initialGuess);
     dispatch(resetGuessedBlocs())
-    setIsDisplayed(false);
+    setConfettiDisplayed(false);
     resteCountDown()
   };
 
   useEffect(()=>{
     onNewGame()
-
   },[])
 
+  // Finish scoring a guess. Compare colors to the generate code and let uses know if the guessed right. Keep track of previous guesses.
   const onGuessCode = () => {
-
+      // Add the right isGuessed to each color if the color is guessed right
      let guessedBloc= intialColors.map((item, idx) => {
         var temp = Object.assign({});;
         if (item=== currentGuess[idx]) {
@@ -65,26 +67,29 @@ function GamePage() {
 
         return temp;
       })
-
+    // store the the guessed Bloc to redux store
     dispatch(addGuessedBlocs(guessedBloc))
-    const isBelowThreshold = (currentValue) => currentValue.isGuessed;
-    if(guessedBloc.every(isBelowThreshold)){
-      stopProcess()
-      setIsDisplayed(true);
+    //condition to check if each object has isGuessed = true
+    const isAllGuessedRight = (currentValue) => currentValue.isGuessed;
+    // with that condition using every to check if all bloc are guessed right . If yes stop timer, show conffeti and the modal
+    if(guessedBloc.every(isAllGuessedRight)){
+      stopTimer()
+      setConfettiDisplayed(true);
       setOpen(true);
     }
-    // TODO: Finish scoring a guess. Compare colors to the generate code and let uses know if the guessed right. Keep track of previous guesses.
   };
 
+  // Selected color that would apper on the guess bloc
   const onSelectColor = (color) => () => setSelectedColor(color);
 
+  // setting the current guess block on each bloc click 
   const onGuessColor = (index) => () => {
     setCurrentGuess(
       currentGuess.map((guess, idx) => (idx === index ? selectedColor : guess))
     );
 
   };
-
+  // Logo
   const onLogout = () => {
     logout()
   };
@@ -102,10 +107,10 @@ function GamePage() {
         </ControlButton>
       </Header>
       <Container>
-        {isDisplayed && <ConfettiShow run={false} />}
+        {confettiDisplayed && <ConfettiShow run={false} />}
         <GameColumn>
           <div className="d-flex pt-3 align-items-center">
-            <Button variant="secondary" disabled={isDisplayed} onClick={onGuessCode}>Guess</Button>
+            <Button variant="secondary" disabled={confettiDisplayed} onClick={onGuessCode}>Guess</Button>
             <div className="d-flex px-3">
               <GuessBlock color={currentGuess[0]} onClick={onGuessColor(0)} />
               <GuessBlock color={currentGuess[1]} onClick={onGuessColor(1)} />
@@ -121,7 +126,6 @@ function GamePage() {
             </div>
             ))}
           </GuessColumn>
-          {/* TODO: List out previous guesses  */}
         </GameColumn>
         <ControlsColumn>
           {COLORS.map((color) => (
@@ -136,7 +140,6 @@ function GamePage() {
           <ControlButton className="mb-3" onClick={onNewGame}>
             Start New Game
           </ControlButton>
-
         </ControlsColumn>
         <Modal showModal={open} toggle={setOpen} time={countdown}/>
       </Container>

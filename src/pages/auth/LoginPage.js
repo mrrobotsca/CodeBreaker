@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import useAuth from '../../hooks/useAuth';
 
-function LoginPage({ history }) {
+// Login page
+function LoginPage() {
 
   const methods = useForm();
-
-  // const { register, handleSubmit ,setError,formState: { errors, isSubmitting }, } = useForm();
   const { login } = useAuth();
   const {
     register,
@@ -16,11 +15,10 @@ function LoginPage({ history }) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = methods;
-  // TODO: finish form submission by handling "api" response
+  // finish form submission by handling "api" response
   // once user is logged in, redirect them to main page
   // make sure to handle when response rejects with error (BONUS: add error message to UI)
   const onSubmit = async(data) => {
-
     try {
       await login(data)
     } 

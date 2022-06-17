@@ -44,7 +44,7 @@ export const loginUser = ({ username, password }) =>
     }, 1000);
 });
 
-
+// Should return the user info havin user id as input 
 export const getUserInfo = (userId) =>
   new Promise((resolve, reject) => {
     let user=USERS_DB.find(user => user?.id === userId)
