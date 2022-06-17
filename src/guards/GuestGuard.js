@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 // hooks
 import useAuth from '../hooks/useAuth';
 
+// Guard for making sure the Login Page wrapped  
 // ----------------------------------------------------------------------
 
 GuestGuard.propTypes = {

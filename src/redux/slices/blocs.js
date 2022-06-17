@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// utils
-//
-import { dispatch } from '../store';
-
+// Bloc slice
 // ----------------------------------------------------------------------
 
 const initialState = {
